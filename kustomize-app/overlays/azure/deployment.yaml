@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache
+  namespace: azure-apache-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: apache
+        image: centos/httpd-24-centos7

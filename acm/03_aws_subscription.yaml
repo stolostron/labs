@@ -1,0 +1,15 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: aws-apache-subscription
+  namespace: aws-apache-test
+  labels:
+    cloud: Amazon
+  annotations:
+    apps.open-cluster-management.io/github-path: kustomize-app
+spec:
+  channel: aws-apache-test/aws-apache-channel-name
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: aws-clusters

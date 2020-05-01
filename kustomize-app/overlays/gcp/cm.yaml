@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  index.html: |
+    <center>
+    <b>
+    GCP
+    </b>
+    </center>
+kind: ConfigMap
+metadata:
+  name: cm
+  namespace: gcp-apache-test

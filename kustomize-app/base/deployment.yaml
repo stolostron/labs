@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache
+  namespace: XXX
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: apache
+        image: XXX
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: vol
+          mountPath: /var/www/html
+      volumes:
+        - name: vol
+          configMap:
+            name: cm
