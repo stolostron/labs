@@ -1,15 +1,15 @@
 apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
-  name: aws-apache-subscription
-  namespace: aws-apache-test
+  name: azure-apache-subscription
+  namespace: azure-apache-test
   labels:
-    cloud: Amazon
+    cloud: Google
   annotations:
     apps.open-cluster-management.io/github-path: kustomize-app
 spec:
-  channel: aws-apache-test/apache-channel
+  channel: azure-apache-test/apache-channel
   placement:
     placementRef:
       kind: PlacementRule
-      name: aws-clusters
+      name: azure-clusters

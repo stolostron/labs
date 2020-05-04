@@ -8,7 +8,7 @@ metadata:
   annotations:
     apps.open-cluster-management.io/github-path: kustomize-app
 spec:
-  channel: gcp-apache-test/gcp-apache-channel-name
+  channel: gcp-apache-test/apache-channel
   placement:
     placementRef:
       kind: PlacementRule
