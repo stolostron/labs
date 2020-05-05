@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    run: apache-service
+  name: apache-service
+  namespace: azure-apache-test
+spec:
+  host: apache-service-gcp-apache-test.apps.scollier-spoke-gcp.scollier-gcp.scollier.sysdeseng.com
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: apache-service
+    weight: 100
+  wildcardPolicy: None

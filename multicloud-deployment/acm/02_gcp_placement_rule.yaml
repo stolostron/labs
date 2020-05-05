@@ -1,0 +1,13 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: gcp-clusters
+  namespace: gcp-apache-test
+spec:
+  clusterConditions:
+   - type: OK
+  clusterSelector:
+    matchExpressions: []
+    matchLabels:
+      cloud: "Google"
+  clusterReplicas: 1

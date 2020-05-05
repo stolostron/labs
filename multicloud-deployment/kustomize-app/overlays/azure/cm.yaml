@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  index.html: |
+    <center>
+    <b>
+    Azure
+    </b>
+    </center>
+kind: ConfigMap
+metadata:
+  name: cm
+  namespace: apache-test
