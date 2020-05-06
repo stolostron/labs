@@ -1,12 +1,12 @@
-# Welcome to the ACM Infrastructure Lab
+# Welcome to the ACM Infrastructure Lab. This lab will walk you through deploying ACM as a hub, provisioning OCP clusters, applications and finally load balancing.
 
 **[Chapter 1 - Introduction](labs/1.md)**
 
-**[Chapter 2 - Provision OCP on AWS - Creating an OCP Hub Cluster](labs/2.md)**
+**[Chapter 2 - Provision OCP Hub Cluster on AWS](labs/2.md)**
 
-**[Chapter 3 - Provision OCP on AWS - Creating a Spoke](labs/3.md)**
+**[Chapter 3 - Provision OCP Spoke on AWS](labs/3.md)**
 
-**[Chapter 4 - Provision OCP on Azure - Creating a Spoke](labs/4.md)**
+**[Chapter 4 - Provision OCP Spoke on Azure](labs/4.md)**
 
 **[Chapter 5 - Provision OCP on GCP - Creating a Spoke](labs/5.md)**
 
