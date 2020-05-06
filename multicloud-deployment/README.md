@@ -8,7 +8,7 @@
 
 **[Chapter 4 - Provision OCP Spoke on Azure](labs/4.md)**
 
-**[Chapter 5 - Provision OCP on GCP - Creating a Spoke](labs/5.md)**
+**[Chapter 5 - Provision OCP Spoke on GCP](labs/5.md)**
 
 **[Chapter 6 - Deploy an Application to each Cluster](labs/6.md)**
 
