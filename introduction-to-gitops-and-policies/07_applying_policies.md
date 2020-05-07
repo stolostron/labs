@@ -5,7 +5,7 @@ In the next examples we are going to create some policies, ACM features a comple
 In order to store our Policies we're going to create a namespace, on the hub cluster run the following command:
 
 ~~~sh
-oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/policies/00_namespace.yaml
+oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/00_namespace.yaml
 ~~~
 
 ## **Namespace must exists on the AWS clusters (Enforce)**
@@ -36,15 +36,15 @@ This policy will ensure a namespace named `testing-policies` exists on all the A
     >**NOTE**: We changed `prod` by `testing-policies`
     
     ![Edit Policy](assets/policy_3.png)
-7. Before hitting `Create` let's check if `testing-policies` namespace exists in our AWS clusters (spoke and spoke2)
+7. Before hitting `Create` let's check if `testing-policies` namespace exists in our AWS clusters named spoke and spoke2
 
     ~~~sh
-    # Check spoke (development)
+    # Check development managed cluster
     oc --context spoke get ns testing-policies
     
     Error from server (NotFound): namespaces "testing-policies" not found
     
-    # Check spoke2 (production)
+    # Check production managed cluster
     oc --context spoke2 get ns testing-policies
     
     Error from server (NotFound): namespaces "testing-policies" not found
@@ -59,13 +59,13 @@ This policy will ensure a namespace named `testing-policies` exists on all the A
 11. As you can see our two clusters are compliant with the policy, let's check if the `testing-policies` namespace exists now
 
     ~~~sh
-    # Check spoke (development)
+    # Check development managed cluster
     oc --context spoke get ns testing-policies
     
     NAME               STATUS   AGE
     testing-policies   Active   9m19s
     
-    # Check spoke2 (production)
+    # Check production managed cluster
     oc --context spoke2 get ns testing-policies
     
     NAME               STATUS   AGE
@@ -103,7 +103,7 @@ This policy will ensure a namespace named `testing-policies` exists on all the A
 As we did during the Application Lifecycle examples, policies can be loaded from yaml files as well, the policy we just created in this example using the WebUI could have been created using the following command:
 
 ~~~sh
-oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/policies/01_namespace_must_exists_enforce.yaml
+oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/01_namespace_must_exists_enforce.yaml
 ~~~
 
 > **NOTE:** During the next examples we're not going to explore the different components like we just did, feel free to run the same exploratory commands in the next exercises, that will help you to get familiar with the different APIs used by ACM.
@@ -117,9 +117,9 @@ In this policy we're going to create the same policy we created before, but inst
 1. Delete the previous policy
 
     ~~~sh
-    oc --context hub delete -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/policies/01_namespace_must_exists_enforce.yaml
+    oc --context hub delete -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/01_namespace_must_exists_enforce.yaml
     ~~~
-2. Delete the namespace from spoke2 cluster (production cluster)
+2. Delete the namespace from managed production cluster
 
     ~~~sh
     oc --context spoke2 delete namespace testing-policies
@@ -128,10 +128,10 @@ In this policy we're going to create the same policy we created before, but inst
 Now we can create the policy which will ensure a namespace named `testing-policies` exists on all the AWS clusters (labeled as `cloud: AWS`). In case the namespace doesn't exist, the cluster will be marked as non-compliant.
 
 ~~~sh
-oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/policies/02_namespace_must_exists_inform.yaml
+oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/02_namespace_must_exists_inform.yaml
 ~~~
 
-Now if we look in the WebUI we will see that the `spoke2` cluster is not compliant with the policy:
+Now if we look in the WebUI we will see that the managed production cluster is not compliant with the policy:
 
 ![Cluster not compliant](assets/policy_6.png)
 
@@ -151,7 +151,7 @@ If we create the namespace we will see how the cluster moves to compliant:
 This policy will ensure a deployment named `cluster-monitoring-operator` exists in the namespace `openshift-monitoring` for production clusters (labeled as `env: pro`). In case the deployment doesn't exist, the cluster will be marked as non-compliant.
 
 ~~~sh
-oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/policies/03_deployment_must_exists_inform.yaml
+oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/03_deployment_must_exists_inform.yaml
 ~~~
 
 ## **Pod must exists on a given namespace and cluster (Enforce)**
@@ -159,7 +159,7 @@ oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/a
 This policy will ensure a nginx pod exists in the namespace default for development clusters (labeled as `env: dev`). In case the pod doesn't exists, it will be created automatically.
 
 ~~~sh
-oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/policies/04_pod_must_exists_enforce.yaml
+oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/04_pod_must_exists_enforce.yaml
 ~~~
 
 ---

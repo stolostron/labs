@@ -35,21 +35,26 @@ There are two types of `Time Windows`:
 * `Active`  -> The subscription can be applied only on the days and hours defined
 * `Blocked` -> The subscription can't be applied on the days and hours defined
 
-Above `Time Window` will deploy our application Fridays, Saturdays or Sundays from `03:00AM` till `06:00AM` (Madrid Timezone)
+Above `Time Window` will deploy our application Fridays, Saturdays or Sundays from `03:00AM` till `05:00AM` (Madrid Timezone)
 
 Hours are optional, a `Time Window` without hours can be defined as well, in that case the `Time Window` will be blocked or active for the whole day.
+
+Keep in mind that that if you have a `Subscription` with an Active/Blocked `TimeWindow`, once the Subscription is deployed or updated the application won't be removed until the next `TimeWindow`. You can think of `TimeWindows` like a maintenance window, a period of time where you can/can't deploy/update your applications.
 
 Back to the example:
 
 1. To avoid app creation collisions we are going to delete previous subscriptions and applications
 
     ~~~sh
-    oc --context hub delete -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/07_subscription-all-okay.yaml
+    oc --context hub delete -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/07_subscription-all-okay.yaml
     ~~~
+
+> **NOTE**: The TimeWindow below has `Friday`, `Saturday` and `Sunday` configured as active days, make sure to modify it (change the active days) as needed so you can see the effect.
+
 2. Create the `Application` and the `Subscription` for deploying the production release of our application to our `production` clusters (labeled as `env: pro`)
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/08_subscription-timewindow.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/08_subscription-timewindow.yaml
     ~~~
 
 Now we should have our application running on the production cluster:

@@ -9,8 +9,8 @@ We're adding `HTPasswd` authentication to our clusters, in order to do so we've 
 We uploaded a `Secret` containing the user credentials to Git (please, don't try this at home, school or anywhere. Keep your plain secrets away from Git), as well as the `OAuth` config required
 for configuring this new authentication method.
 
-* [Secret](https://github.com/mvazquezc/acm-testing/blob/infra/authentication/htpass-credentials.yam)
-* [OAuth Config](https://github.com/mvazquezc/acm-testing/blob/infra/authentication/htpasswd-oauth-config.yaml)
+* [Secret](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/blob/infra/authentication/htpass-credentials.yam)
+* [OAuth Config](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/blob/infra/authentication/htpasswd-oauth-config.yaml)
 
 We're going to add this authentication method to our `Development` clusters, there is one RFE opened to allow setting different `namespaces` for the objects created by `Subscription` rather than defaulting to
 the namespace where the subscription is created. Since the RFE is still not implemented, we are going to create ACM manifest in the `openshift-config` namespace. You can track the RFE status [here](https://github.com/open-cluster-management/backlog/issues/1295).
@@ -18,12 +18,12 @@ the namespace where the subscription is created. Since the RFE is still not impl
 1. Create the `PlacementRule` for matching the `development` clusters
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/infra-gitops/00_placement_rule-dev.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/infra-gitops/00_placement_rule-dev.yaml
     ~~~
 2. Create the `Subscription` for deploying the OAuth config onto `development` clusters
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/infra-gitops/01_subscription-oauth-htpasswd-config-dev.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/infra-gitops/01_subscription-oauth-htpasswd-config-dev.yaml
     ~~~
 
 ---

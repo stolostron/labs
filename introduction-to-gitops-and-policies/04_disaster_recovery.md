@@ -5,14 +5,14 @@ In this use case we are going to define the deployment of our application as fol
 1. We always want a single replica of our application running across a set of clusters
 2. If the cluster hosting that single replica goes down, another one should deploy the application
 
-For this use case we're going to create a new `PlacementRule` that matches the clusters labeled as `finance: dev`, we will add this new label to `spoke` and `spoke2` clusters. This new `PlacementRule` will include only one of the clusters
+For this use case we're going to create a new `PlacementRule` that matches the clusters labeled as `finance: dev`, we will add this new label to clusters named `spoke` and `spoke2`. This new `PlacementRule` will include only one of the clusters
 since we defined `clusterReplicas: 1` within the `PlacementRule`.
 
 
 1. To avoid app creation collisions we are going to delete previous subscriptions and applications
 
     ~~~sh
-    oc --context hub delete -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/08_subscription-timewindow.yaml
+    oc --context hub delete -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/08_subscription-timewindow.yaml
     ~~~
 2. Label the clusters
 
@@ -26,7 +26,7 @@ since we defined `clusterReplicas: 1` within the `PlacementRule`.
 3. Create the new `PlacementRule`
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/09_placement_rule-finance.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/09_placement_rule-finance.yaml
     ~~~
 4. Before creating the `Subscription` let's check which cluster is matching the `PlacementRule` we just created
 
@@ -39,7 +39,7 @@ since we defined `clusterReplicas: 1` within the `PlacementRule`.
 5. Create the `Subscription`
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/10_subscription-finance.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/10_subscription-finance.yaml
     ~~~
 
 Now we should have our application running on the `spoke` cluster and not in `spoke2` cluster:
@@ -62,9 +62,9 @@ oc --context spoke2 -n gitops-apps get pods,svc
 No resources found in gitops-apps namespace.
 ~~~
 
-Now we are going to simulate that we lose one of the `finance: dev` clusters, in order to do so, we are going to remove the `finance: dev` label from `spoke` cluster, that way the application should be deployed onto `spoke2` cluster.
+Now we are going to simulate that we lose one of the `finance: dev` clusters, in order to do so, we are going to remove the `finance: dev` label from cluster named `spoke`, that way the application should be deployed onto cluster named `spoke2`.
 
-1. Remove `finance: dev` label from `spoke` cluster
+1. Remove `finance: dev` label from cluster named `spoke`:
 
     ~~~sh
     oc --context hub -n spoke patch cluster spoke -p '{"metadata":{"labels":{"finance":null}}}' --type=merge
@@ -76,7 +76,7 @@ Now we are going to simulate that we lose one of the `finance: dev` clusters, in
     map[clusterName:spoke2 clusterNamespace:spoke2]
     ~~~
 
-The application should be moved to `spoke2` cluster and removed from `spoke` cluster
+The application should be moved to cluster named `spoke2` and removed from cluster named `spoke`.
 
 > **NOTE**: We're using `oc` tool in order to verify the app deployment. Feel free to review the application on the ACM Console as well.
 

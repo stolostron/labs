@@ -6,7 +6,7 @@ In this use case we are going to deploy a sample application to our `development
 
 Let's explore the different ACM components we will be using in this example: `Channel`, `PlacementRule`, `Application` and `Subscription`:
 
-1. A `Channel` named `mvazquez-gitops-github` will be created, it is a `GitHub` type channel and points to [this](https://github.com/mvazquezc/acm-testing.git) Git repository
+1. A `Channel` named `mvazquez-gitops-github` will be created, it is a `GitHub` type channel and points to [this](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab.git) Git repository
 
     ~~~yaml
     apiVersion: apps.open-cluster-management.io/v1
@@ -16,7 +16,7 @@ Let's explore the different ACM components we will be using in this example: `Ch
       namespace: gitops-apps
     spec:
       type: GitHub
-      pathname: https://github.com/mvazquezc/acm-testing.git
+      pathname: https://github.com/RHsyseng/acm-app-lifecycle-policies-lab.git
     ~~~
 2. A `PlacementRule` named `development-clusters` will be created, it will return only 1 cluster out of all our clusters labeled as `env: dev`
 
@@ -85,24 +85,24 @@ Let's explore the different ACM components we will be using in this example: `Ch
 1. Create a `Namespace` where we will store the ACM manifests for the application
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/00_namespace.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/00_namespace.yaml
     ~~~
 2. Create a `Channel` defining our GitHub repository as the source of truth for the application
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/01_channel.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/01_channel.yaml
     ~~~
 3. Create a `PlacementRule` matching our `development` clusters (labeled as `env: dev`)
 
     > **NOTE**: In our `PlacementRule` we are defining `clusterReplicas: 1`, that means that even if we have more than 1 cluster that matches the labels defined in the `PlacementRule`, the `PlacementRule` will only return 1 of them back
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/02_placement_rule-dev.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/02_placement_rule-dev.yaml
     ~~~
 4. Create an `Application` and a `Subscription` for deploying our app onto the `development` clusters
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/03_subscription-dev.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/03_subscription-dev.yaml
     ~~~
 
 Let's explore the status for our `PlacementRule` and `Subscription`:
@@ -112,7 +112,7 @@ Let's explore the status for our `PlacementRule` and `Subscription`:
     ~~~sh
     oc --context hub -n gitops-apps get placementrule development-clusters -o yaml
     ~~~
-    > As you can see in the `status` we are matching cluster `spoke` which is our development cluster
+    > As you can see in the `status` we are matching cluster named `spoke` which is our development cluster
     ~~~yaml
     apiVersion: apps.open-cluster-management.io/v1
     kind: PlacementRule
@@ -142,7 +142,7 @@ Let's explore the status for our `PlacementRule` and `Subscription`:
     ~~~sh
     oc --context hub -n gitops-apps get subscription reversewords-dev-app-subscription -o yaml
     ~~~
-    > As you can see in the `status` we are sending the application to spoke cluster and the subscription is propagated to the cluster already
+    > As you can see in the `status` we are sending the application to the cluster named spoke and the subscription is propagated to the cluster already
     ~~~yaml
     apiVersion: apps.open-cluster-management.io/v1
     kind: Subscription
@@ -176,6 +176,8 @@ Now we should have our application running on the development cluster, we are go
 
 1. Using the `oc` command
 
+    > **NOTE**: It could take a few moments (up to 2 minutes) for the Subscription to be propagated to the managed cluster.
+
     ~~~sh
     oc --context spoke -n gitops-apps get pods,svc
 
@@ -186,7 +188,7 @@ Now we should have our application running on the development cluster, we are go
     service/reverse-words   LoadBalancer   172.30.66.136   ae63068d95e564c75a0851d5518fc18c-1765337096.eu-central-1.elb.amazonaws.com   8080:30333/TCP   37s
     ~~~
 2. Using the OCP Console
-    1. Login into Spoke (`env:dev`) cluster console and go to Workloads -> Pods
+    1. Login into the Managed (`env:dev`) cluster console and go to Workloads -> Pods
     2. Select the namespace `gitops-apps` and you will see our application pod
         ![App Pods](assets/ex1_pods.png)
     3. Go to Networking -> Services
@@ -194,13 +196,11 @@ Now we should have our application running on the development cluster, we are go
         ![App Services](assets/ex1_services.png)
 3. Using the ACM Console
     1. Login into ACM Console
-    2. Go to `Manage Applications`
-    3. From the application list select `reverse-words-dev-app`
+    2. Go to `Menu -> Manage Applications`
+    3. From the application list select `reversewords-dev-app`
         
         ![ACM Apps](assets/ex1_acm_app_1.png)
     4. Here you will see the application topology
-
-        > **NOTE**: Application topology will not show correctly for this example due to a bug: https://github.com/open-cluster-management/backlog/issues/1487
         
         ![ACM Apps](assets/ex1_acm_app_2.png)
 
@@ -234,12 +234,12 @@ As we already created the `Namespace` and the `Channel` for the previous use cas
     > **NOTE**: In our `PlacementRule` we are defining `clusterReplicas: 1`, that means that even if we have more than 1 cluster that matches the labels defined in the `PlacementRule`, the `PlacementRule` will only return 1 of them back
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/04_placement_rule-prod.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/04_placement_rule-prod.yaml
     ~~~
 2. Create an `Application` and a `Subscription` for deploying our app onto the `production` clusters
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/05_subscription-prod.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/05_subscription-prod.yaml
     ~~~
 
 Let's explore the `Application` and `Subscription` manifests.
@@ -252,6 +252,8 @@ Let's explore the `Application` and `Subscription` manifests.
     4. The subscription will be deployed on all clusters reported by the `PlacementRule` named `production-clusters`
 
 Now we should have our application running on the production cluster:
+
+> **NOTE**: It could take a few moments (up to 2 minutes) for the Subscription to be propagated to the managed cluster.
 
 > **NOTE**: We're using `oc` tool in order to verify the app deployment. Feel free to review the application on the ACM Console as well.
 
@@ -282,26 +284,28 @@ In this use case we are going to deploy the sample application to all clusters t
 1. To avoid app creation collisions we are going to delete previous subscriptions and applications
 
     ~~~sh
-    oc --context hub delete -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/03_subscription-dev.yaml
-    oc --context hub delete -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/05_subscription-prod.yaml
+    oc --context hub delete -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/03_subscription-dev.yaml
+    oc --context hub delete -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/05_subscription-prod.yaml
     ~~~
 2. Create a `PlacementRule` matching all healthy clusters (reported back as `Cluster Condition - OK`)
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/06_placement_rule-all-okay.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/06_placement_rule-all-okay.yaml
     ~~~
 3. Create the `Application` and the `Subscription` for deploying the production release of our application to all healthy clusters
 
     ~~~sh
-    oc --context hub create -f https://github.com/mvazquezc/acm-testing/raw/master/acm-manifests/reversewords-kustomize/07_subscription-all-okay.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/07_subscription-all-okay.yaml
     ~~~
 
 Now we should have our application running on the `development` and `production` clusters since all our clusters are healthy
 
+> **NOTE**: It could take a few moments (up to 2 minutes) for the Subscription to be propagated to the managed cluster.
+
 > **NOTE**: We're using `oc` tool in order to verify the app deployment. Feel free to review the application on the ACM Console as well.
 
 ~~~sh
-# Get Spoke data (dev cluster)
+# Get Spoke data (managed dev cluster)
 oc --context spoke -n gitops-apps get pods,svc
 
 NAME                                 READY   STATUS    RESTARTS   AGE
@@ -310,7 +314,7 @@ pod/reverse-words-65d5c5df86-vqb75   0/1     Running   0          11s
 NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP                                                                 PORT(S)          AGE
 service/reverse-words   LoadBalancer   172.30.122.125   a1efe007590934185adaa324e41b4013-263814226.eu-central-1.elb.amazonaws.com   8080:30929/TCP   11s
 
-# Get Spoke2 data (prod cluster)
+# Get Spoke2 data (managed prod cluster)
 oc --context spoke2 -n gitops-apps get pods,svc
 
 NAME                                 READY   STATUS    RESTARTS   AGE
