@@ -1,14 +1,14 @@
 # Applying Policies
 
-In the next examples we are going to create some policies, ACM features a complete WebUI that you can use to create policies using a wizard, we're going to explore this wizard for our first Policy only.
+In the next examples we are going to create some policies. ACM features a complete WebUI that you can use to create policies using a wizard. We're going to explore this wizard for our first Policy only.
 
-In order to store our Policies we're going to create a namespace, on the hub cluster run the following command:
+In order to store our Policies we're going to create a namespace. On the hub cluster run the following command:
 
 ~~~sh
 oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/00_namespace.yaml
 ~~~
 
-## **Namespace must exists on the AWS clusters (Enforce)**
+## **Namespace must exist on the AWS clusters (Enforce)**
 
 This policy will ensure a namespace named `testing-policies` exists on all the AWS clusters (labeled as `cloud: AWS`). In case the namespace doesn't exist, it will be created automatically.
 
@@ -23,17 +23,17 @@ This policy will ensure a namespace named `testing-policies` exists on all the A
     2. Namespace: `policies`
     3. Specifications: `Namespace - must have namespace 'prod'`
     4. Cluster binding: `cloud: "AWS"`
-    5. Standards: `Clear selected items`
-    6. Categories: `Clear selected items`
-    7. Controls: `Clear selected items`
+    5. Standards: `Uncheck the selected items`
+    6. Categories: `Uncheck the selected items`
+    7. Controls: `Uncheck the selected items`
     8. Enforce if supported: `Marked`
     9. Disable policy: `Unmarked`
 5. At this point your wizard should look like this
 
     ![Wizard Policy](assets/policy_2.png)
-6. But we want to ensure a namespaced named `testing-policies` exists, so we need to edit the yaml a bit
+6. We want to ensure a namespaced named `testing-policies` exists, so we need to edit the yaml a bit
 
-    >**NOTE**: We changed `prod` by `testing-policies`
+    >**NOTE**: We replaced `prod` by `testing-policies`
     
     ![Edit Policy](assets/policy_3.png)
 7. Before hitting `Create` let's check if `testing-policies` namespace exists in our AWS clusters named spoke and spoke2
@@ -110,7 +110,7 @@ oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policie
 
 > **NOTE:** Following exercises will load policies from a yaml file directly, feel free to explore the yaml files before creating the policy in order to understand how the policy is configured.
 
-## **Namespace must exists on the AWS clusters (Inform)**
+## **Namespace must exist on the AWS clusters (Inform)**
 
 In this policy we're going to create the same policy we created before, but instead of `enforcing` it, we will configure it as `inform`. Before creating this new policy we're going to delete the previous policy and remove the `testing-policies` namespace from one of the clusters.
 
@@ -146,7 +146,7 @@ If we create the namespace we will see how the cluster moves to compliant:
 
     ![Cluster compliant](assets/policy_7.png)
 
-## **Deployment must exists on a given namespace and cluster (Inform)**
+## **Deployment must exist on a given namespace and cluster (Inform)**
 
 This policy will ensure a deployment named `cluster-monitoring-operator` exists in the namespace `openshift-monitoring` for production clusters (labeled as `env: pro`). In case the deployment doesn't exist, the cluster will be marked as non-compliant.
 
@@ -154,7 +154,7 @@ This policy will ensure a deployment named `cluster-monitoring-operator` exists 
 oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/03_deployment_must_exists_inform.yaml
 ~~~
 
-## **Pod must exists on a given namespace and cluster (Enforce)**
+## **Pod must exist on a given namespace and cluster (Enforce)**
 
 This policy will ensure a nginx pod exists in the namespace default for development clusters (labeled as `env: dev`). In case the pod doesn't exists, it will be created automatically.
 
