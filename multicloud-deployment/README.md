@@ -1,4 +1,6 @@
-# Welcome to the ACM Infrastructure Lab. This lab will walk you through deploying ACM as a hub, provisioning OCP clusters, applications and finally load balancing.
+# ACM Infrastructure Lab. 
+
+This lab will walk you through deploying ACM as a hub, provisioning OCP clusters, applications and finally load balancing.
 
 **[Chapter 1 - Introduction](labs/1.md)**
 
