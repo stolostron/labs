@@ -55,6 +55,12 @@ You should have three Kubeconfigs / credentials to access the three different cl
 
 If you don't know how to merge your Kubeconfigs and create the context you can refer to [this documentation](https://openshift.tips/oc/#merge-multiple-kubeconfigs).
 
+# Browser
+
+We recommend to use a recent web browser in order to access the different web consoles during the lab.
+
+There are known issues with displaying content properly using older browsers.
+
 ---
 
 **Continue to [Introduction to GitOps on ACM](./01_introduction_to_gitops.md)**

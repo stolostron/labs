@@ -1,6 +1,8 @@
 # Configuring Infrastructure using Apps
 
-> **NOTE**: Current `Subscription Operator` version (as April 3rd 2020) doesn't support patching existing resources on the cluster, that means that the OAuth config won't be applied. This use-case is documented here for reference only.
+> **Current `Subscription Operator` version (as April 3rd 2020) doesn't support patching existing resources on the cluster, that means that the OAuth config won't be applied. This use-case is documented here for reference only.**
+
+---
 
 As you know GitOps pattern can be used as well for configuring infrastructure related things, in this use case we're going to add a new authentication method to our clusters.
 
@@ -9,7 +11,7 @@ We're adding `HTPasswd` authentication to our clusters, in order to do so we've 
 We uploaded a `Secret` containing the user credentials to Git (please, don't try this at home, school or anywhere. Keep your plain secrets away from Git), as well as the `OAuth` config required
 for configuring this new authentication method.
 
-* [Secret](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/blob/infra/authentication/htpass-credentials.yam)
+* [Secret](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/blob/infra/authentication/htpass-credentials.yaml)
 * [OAuth Config](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/blob/infra/authentication/htpasswd-oauth-config.yaml)
 
 We're going to add this authentication method to our `Development` clusters, there is one RFE opened to allow setting different `namespaces` for the objects created by `Subscription` rather than defaulting to
