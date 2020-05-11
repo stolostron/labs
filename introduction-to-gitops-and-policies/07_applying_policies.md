@@ -31,7 +31,7 @@ This policy will ensure a namespace named `testing-policies` exists on all the A
 5. At this point your wizard should look like this
 
     ![Wizard Policy](assets/policy_2.png)
-6. We want to ensure a namespaced named `testing-policies` exists, so we need to edit the yaml a bit
+6. We want to ensure a namespace named `testing-policies` exists, so we need to edit the yaml a bit
 
     >**NOTE**: We replaced `prod` by `testing-policies`
     
