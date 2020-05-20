@@ -6,13 +6,13 @@ In this use case we are going to deploy a sample application to our `development
 
 Let's explore the different ACM components we will be using in this example: `Channel`, `PlacementRule`, `Application` and `Subscription`:
 
-1. A `Channel` named `mvazquez-gitops-github` will be created, it is a `GitHub` type channel and points to [this](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab.git) Git repository
+1. A `Channel` named `acm-gitops-github` will be created, it is a `GitHub` type channel and points to [this](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab.git) Git repository
 
     ~~~yaml
     apiVersion: apps.open-cluster-management.io/v1
     kind: Channel
     metadata:
-      name: mvazquez-gitops-github
+      name: acm-gitops-github
       namespace: gitops-apps
     spec:
       type: GitHub
@@ -56,7 +56,7 @@ Let's explore the different ACM components we will be using in this example: `Ch
           - reversewords-dev-app
     ~~~
 4. A `Subscription` named `reversewords-dev-app-subscription` will be created:
-    1. The app manifests are loaded from the channel `mvazquez-gitops-github` created in the namespace `gitops-apps`
+    1. The app manifests are loaded from the channel `acm-gitops-github` created in the namespace `gitops-apps`
     2. The path inside the Git repository for our application is `apps/reversewords/`
     3. The branch used is `stage`
     4. The subscription will be deployed on all clusters reported by the `PlacementRule` named `development-clusters`
@@ -73,7 +73,7 @@ Let's explore the different ACM components we will be using in this example: `Ch
         apps.open-cluster-management.io/github-path: apps/reversewords/
         apps.open-cluster-management.io/github-branch: stage
     spec:
-      channel: gitops-apps/mvazquez-gitops-github
+      channel: gitops-apps/acm-gitops-github
       placement:
         placementRef:
           kind: PlacementRule
@@ -160,7 +160,7 @@ Let's explore the status for our `PlacementRule` and `Subscription`:
       selfLink: /apis/apps.open-cluster-management.io/v1/namespaces/gitops-apps/subscriptions/reversewords-dev-app-subscription
       uid: 822c18f8-1bca-4677-a40d-37f0e7faee81
     spec:
-      channel: gitops-apps/mvazquez-gitops-github
+      channel: gitops-apps/acm-gitops-github
       placement:
         placementRef:
           kind: PlacementRule
@@ -246,7 +246,7 @@ Let's explore the `Application` and `Subscription` manifests.
 
 1. An `Application` named `reversewords-pro-app` will be created, the Application components will be the subscriptions labeled with `app: reversewords-pro-app`
 2. A `Subscription` named `reversewords-pro-app-subscription` will be created:
-    1. The app manifests are loaded from the channel `mvazquez-gitops-github` created in the namespace `gitops-apps`
+    1. The app manifests are loaded from the channel `acm-gitops-github` created in the namespace `gitops-apps`
     2. The path inside the Git repository for our application is `apps/reversewords/`
     3. The branch used is `prod`
     4. The subscription will be deployed on all clusters reported by the `PlacementRule` named `production-clusters`

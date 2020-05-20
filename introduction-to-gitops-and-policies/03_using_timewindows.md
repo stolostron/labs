@@ -16,7 +16,7 @@ metadata:
     apps.open-cluster-management.io/github-path: apps/reversewords/
     apps.open-cluster-management.io/github-branch: prod
 spec:
-  channel: gitops-apps/mvazquez-gitops-github
+  channel: gitops-apps/acm-gitops-github
   placement:
     placementRef:
       kind: PlacementRule
