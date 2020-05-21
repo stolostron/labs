@@ -8,11 +8,15 @@ In this use case we are going to define the deployment of our application as fol
 For this use case we're going to create a new `PlacementRule` that matches the clusters labeled as `finance: dev`, we will add this new label to clusters named `spoke` and `spoke2`. This new `PlacementRule` will include only one of the clusters
 since we defined `clusterReplicas: 1` within the `PlacementRule`.
 
-
-1. To avoid app creation collisions we are going to delete previous subscriptions and applications
+<!-- 1. To avoid app creation collisions we are going to delete previous subscriptions and applications
 
     ~~~sh
     oc --context hub delete -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/08_subscription-timewindow.yaml
+    ~~~ -->
+1. To avoid app creation collisions we are going to delete previous subscriptions and applications
+
+    ~~~sh
+    oc --context hub delete -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/07_subscription-all-okay.yaml
     ~~~
 2. Label the clusters
 
@@ -100,6 +104,7 @@ service/reverse-words   LoadBalancer   172.30.132.90   ae00548c6b1e94922a72b5918
 
 **Continue to [Infrastructure as Code](./05_infrastructure_as_code.md)**
 
-**Back to [Using TimeWindows](./03_using_timewindows.md)** 
+<!-- **Back to [Using TimeWindows](./03_using_timewindows.md)** -->
+**Back to [Deploying Applications to Multiple Clusters](./02_deploying_apps_to_clusters.md)** 
 
 **Go [Home](./README.md)**
