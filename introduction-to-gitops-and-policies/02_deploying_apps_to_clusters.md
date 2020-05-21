@@ -340,7 +340,8 @@ Reverse Words Release: Production release v0.0.2. App version: v0.0.2
 
 ---
 
-**Continue to [Using TimeWindows](./03_using_timewindows.md)**
+<!--**Continue to [Using TimeWindows](./03_using_timewindows.md)** -->
+**Continue to [Disaster Recovery](./04_disaster_recovery.md)**
 
 **Back to [Introduction to GitOps on ACM](./01_introduction_to_gitops.md)** 
 
