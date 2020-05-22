@@ -1,0 +1,8 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: azure-apache-channel
+  namespace: azure-apache-test
+spec:
+  type: GitHub
+  pathname: https://github.com/scollier/acm-app.git

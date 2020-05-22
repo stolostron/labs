@@ -1,7 +1,8 @@
 apiVersion: apps.open-cluster-management.io/v1
 kind: Channel
 metadata:
-  name: apache-channel
+  name: aws-apache-channel
+  namespace: aws-apache-test
 spec:
   type: GitHub
   pathname: https://github.com/scollier/acm-app.git
