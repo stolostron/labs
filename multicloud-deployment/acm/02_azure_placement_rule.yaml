@@ -2,7 +2,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: azure-clusters
-  namespace: azure-apache-test
+  namespace: apache-test
 spec:
   clusterConditions:
    - type: OK
