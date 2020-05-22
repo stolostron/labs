@@ -9,5 +9,5 @@ spec:
   clusterSelector:
     matchExpressions: []
     matchLabels:
-      cloud: "Microsoft"
+      cloud: "Azure"
   clusterReplicas: 1
