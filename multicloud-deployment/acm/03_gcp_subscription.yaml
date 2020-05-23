@@ -6,7 +6,8 @@ metadata:
   labels:
     cloud: Google
   annotations:
-    apps.open-cluster-management.io/github-path: kustomize-app
+    apps.open-cluster-management.io/github-path: kustomize-app/overlays/gcp
+    apps.open-cluster-management.io/github-branch: cwilkers
 spec:
   channel: apache-test/apache-channel
   placement:

@@ -4,9 +4,10 @@ metadata:
   name: azure-apache-subscription
   namespace: apache-test
   labels:
-    cloud: Google
+    cloud: Azure
   annotations:
-    apps.open-cluster-management.io/github-path: kustomize-app
+    apps.open-cluster-management.io/github-path: kustomize-app/overlays/azure
+    apps.open-cluster-management.io/github-branch: cwilkers
 spec:
   channel: apache-test/apache-channel
   placement:
