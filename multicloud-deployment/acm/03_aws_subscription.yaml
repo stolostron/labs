@@ -2,13 +2,14 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
   name: aws-apache-subscription
-  namespace: aws-apache-test
+  namespace: apache-test
   labels:
     cloud: Amazon
   annotations:
-    apps.open-cluster-management.io/github-path: kustomize-app
+    apps.open-cluster-management.io/github-path: kustomize-app/overlays/aws
+    apps.open-cluster-management.io/github-branch: cwilkers
 spec:
-  channel: aws-apache-test/apache-channel
+  channel: apache-test/apache-channel
   placement:
     placementRef:
       kind: PlacementRule

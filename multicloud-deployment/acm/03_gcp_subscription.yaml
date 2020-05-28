@@ -2,13 +2,14 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
   name: gcp-apache-subscription
-  namespace: gcp-apache-test
+  namespace: apache-test
   labels:
     cloud: Google
   annotations:
-    apps.open-cluster-management.io/github-path: kustomize-app
+    apps.open-cluster-management.io/github-path: kustomize-app/overlays/gcp
+    apps.open-cluster-management.io/github-branch: cwilkers
 spec:
-  channel: gcp-apache-test/apache-channel
+  channel: apache-test/apache-channel
   placement:
     placementRef:
       kind: PlacementRule

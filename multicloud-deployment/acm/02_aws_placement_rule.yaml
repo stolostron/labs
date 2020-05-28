@@ -2,7 +2,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: aws-clusters
-  namespace: aws-apache-test
+  namespace: apache-test
 spec:
   clusterConditions:
    - type: OK

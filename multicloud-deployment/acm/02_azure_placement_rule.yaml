@@ -2,12 +2,12 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: azure-clusters
-  namespace: azure-apache-test
+  namespace: apache-test
 spec:
   clusterConditions:
    - type: OK
   clusterSelector:
     matchExpressions: []
     matchLabels:
-      cloud: "Microsoft"
+      cloud: "Azure"
   clusterReplicas: 1
