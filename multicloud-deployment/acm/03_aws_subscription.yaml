@@ -7,7 +7,7 @@ metadata:
     cloud: Amazon
   annotations:
     apps.open-cluster-management.io/github-path: kustomize-app/overlays/aws
-    apps.open-cluster-management.io/github-branch: cwilkers
+    apps.open-cluster-management.io/github-branch: master
 spec:
   channel: apache-test/apache-channel
   placement:
