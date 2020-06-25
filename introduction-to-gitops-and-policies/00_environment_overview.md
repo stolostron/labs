@@ -12,16 +12,16 @@ You can follow the official docs in order to deploy OpenShift as well as ACM, th
 
 **OpenShift Clusters**
 
-* 1 HUB Cluster Running OCP 4.3.9
-  * ACM Snapshot Used: 1.0.0-SNAPSHOT-2020-04-07-08-16-29
-* 1 Managed Cluster Running OCP 4.4.0
+* 1 x HUB Cluster Running OCP 4.4.5
+  * ACM Version Used: Tech Preview 1.0.1
+* 1 x Managed Cluster Running OCP 4.4.4
   * Cluster Labels: 
     * cloud: AWS
     * env: **dev**
     * name: spoke
     * region: EU
     * vendor: Amazon
-* 1 Managed Cluster Running OCP 4.4.0
+* 1 x Managed Cluster Running OCP 4.4.4
   * Cluster Labels: 
     * cloud: AWS
     * env: **pro**
@@ -41,20 +41,6 @@ You can follow the official docs in order to deploy OpenShift as well as ACM, th
   * prod   -> Stores the overlay files for our APPs that apply to production environments
   * infra  -> Stores manifests related to cluster infrastructure
 
-# OC Tool Context Configuration
-
-The following steps will leverage the usage of `contexts` within the `oc` tool.
-
-We will be using three contexts:
-
-* `hub`    -> Context for accessing HUB Cluster 
-* `spoke`  -> Context for accessing Development Managed Cluster
-* `spoke2` -> Context for accessing Production Managed Cluster
-
-You should have three Kubeconfigs / credentials to access the three different clusters, you need to merge those into a single one following the instructions in the link below.
-
-If you don't know how to merge your Kubeconfigs and create the context you can refer to [this documentation](https://openshift.tips/oc/#merge-multiple-kubeconfigs).
-
 # Browser
 
 We recommend to use a recent web browser in order to access the different web consoles during the lab.
@@ -63,6 +49,6 @@ There are known issues with displaying content properly using older browsers.
 
 ---
 
-**Continue to [Introduction to GitOps on ACM](./01_introduction_to_gitops.md)**
+**Continue to [Importing Managed Clusters into ACM](./01_importing_managed_clusters.md)**
 
 **Go [Home](./README.md)**
