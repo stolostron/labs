@@ -36,16 +36,16 @@ This policy will ensure a namespace named `testing-policies` exists on all the A
     > ![WARNING](assets/warning-icon.png) **NOTE:** We replaced `prod` by `testing-policies`
     
     ![Edit Policy](assets/policy_3.png)
-7. Before hitting `Create` let's check if `testing-policies` namespace exists in our AWS clusters named spoke and spoke2
+7. Before hitting `Create` let's check if `testing-policies` namespace exists in our AWS clusters named managed-cluster1-dev and managed-cluster2-prod
 
     ~~~sh
     # Check development managed cluster
-    oc --context spoke get ns testing-policies
+    oc --context managed-dev get ns testing-policies
     
     Error from server (NotFound): namespaces "testing-policies" not found
     
     # Check production managed cluster
-    oc --context spoke2 get ns testing-policies
+    oc --context managed-prod get ns testing-policies
     
     Error from server (NotFound): namespaces "testing-policies" not found
     ~~~
@@ -60,16 +60,16 @@ This policy will ensure a namespace named `testing-policies` exists on all the A
 
     ~~~sh
     # Check development managed cluster
-    oc --context spoke get ns testing-policies
+    oc --context managed-dev get ns testing-policies
     
     NAME               STATUS   AGE
-    testing-policies   Active   9m19s
+    testing-policies   Active   107s
     
     # Check production managed cluster
-    oc --context spoke2 get ns testing-policies
+    oc --context managed-prod get ns testing-policies
     
     NAME               STATUS   AGE
-    testing-policies   Active   9m31s
+    testing-policies   Active   114s
     ~~~
 12. Since the policy was configured in `enforce` mode, ACM went ahead and created the namespaces in our clusters so they are compliant with the policy
 13. We can use the `oc` tool in order to check the status of our policies as well
@@ -81,23 +81,16 @@ This policy will ensure a namespace named `testing-policies` exists on all the A
     ~~~yaml
     <OUTPUT_OMITTED>
     status:
-      placementBindings:
-      - binding-policy-namespace-enforce
-      placementPolicies:
-      - placement-policy-namespace-enforce
+      placement:
+      - placementBinding: binding-policy-namespace-enforce
+        placementRule: placement-policy-namespace-enforce
       status:
-        spoke:
-          aggregatePoliciesStatus:
-            policies.policy-namespace-enforce:
-              compliant: Compliant
-          clustername: spoke
-          compliant: Compliant
-        spoke2:
-          aggregatePoliciesStatus:
-            policies.policy-namespace-enforce:
-              compliant: Compliant
-          clustername: spoke2
-          compliant: Compliant
+      - clustername: managed-cluster1-dev
+        clusternamespace: managed-cluster1-dev
+        compliant: Compliant
+      - clustername: managed-cluster2-prod
+        clusternamespace: managed-cluster2-prod
+        compliant: Compliant
     ~~~
 
 As we did during the Application Lifecycle examples, policies can be loaded from yaml files as well, the policy we just created in this example using the WebUI could have been created using the following command:
@@ -122,7 +115,7 @@ In this policy we're going to create the same policy we created before, but inst
 2. Delete the namespace from managed production cluster
 
     ~~~sh
-    oc --context spoke2 delete namespace testing-policies
+    oc --context managed-prod delete namespace testing-policies
     ~~~
 
 Now we can create the policy which will ensure a namespace named `testing-policies` exists on all the AWS clusters (labeled as `cloud: AWS`). In case the namespace doesn't exist, the cluster will be marked as non-compliant.
@@ -140,7 +133,7 @@ If we create the namespace we will see how the cluster moves to compliant:
 1. Create the namespace
 
     ~~~sh
-    oc --context spoke2 create namespace testing-policies
+    oc --context managed-prod create namespace testing-policies
     ~~~
 2. The cluster should move to compliant
 
@@ -148,7 +141,7 @@ If we create the namespace we will see how the cluster moves to compliant:
 
 ## **Deployment must exist on a given namespace and cluster (Inform)**
 
-This policy will ensure a deployment named `cluster-monitoring-operator` exists in the namespace `openshift-monitoring` for production clusters (labeled as `env: pro`). In case the deployment doesn't exist, the cluster will be marked as non-compliant.
+This policy will ensure a deployment named `cluster-monitoring-operator` exists in the namespace `openshift-monitoring` for production clusters (labeled as `environment: prod`). In case the deployment doesn't exist, the cluster will be marked as non-compliant.
 
 ~~~sh
 oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/03_deployment_must_exists_inform.yaml
@@ -156,7 +149,7 @@ oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policie
 
 ## **Pod must exist on a given namespace and cluster (Enforce)**
 
-This policy will ensure a nginx pod exists in the namespace default for development clusters (labeled as `env: dev`). In case the pod doesn't exists, it will be created automatically.
+This policy will ensure a nginx pod exists in the namespace default for development clusters (labeled as `environment: dev`). In case the pod doesn't exists, it will be created automatically.
 
 ~~~sh
 oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/04_pod_must_exists_enforce.yaml

@@ -6,7 +6,7 @@ In ACM, policies are composed by different components, we are going to explore t
 
 Defines the different "checks" clusters will be validated against. `Policies` have `Specifications`. A Specification is a set of rules that will be validated against the clusters.
 
-[Learn More](https://github.com/open-cluster-management/rhacm-docs/blob/doc_stage/governance/manage_grc_policy.md)
+[Learn More](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.0/html/security/security#governance-and-risk)
 
 **PlacementBinding**
 
