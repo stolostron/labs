@@ -91,6 +91,8 @@ Let's explore the different ACM components we will be using in this example: `Ch
     ~~~
 2. Create a `Channel` defining our GitHub repository as the source of truth for the application
 
+    > ![TIP](assets/tip-icon.png) **NOTE:** In the following examples we will use a `Git` Channel, there are more channel types available. You can find them in the docs [here](https://access.redhat.com/documentation/en-us/red_hat_advanced_cluster_management_for_kubernetes/2.0/html/manage_applications/managing-applications#channel-samples)
+
     ~~~sh
     oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/01_channel.yaml
     ~~~

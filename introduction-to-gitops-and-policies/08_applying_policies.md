@@ -155,6 +155,53 @@ This policy will ensure a nginx pod exists in the namespace default for developm
 oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/04_pod_must_exists_enforce.yaml
 ~~~
 
+## **Limit Memory Range on a given namespace and cluster**
+
+This policy will ensure that Pods have default memory `requests` and `limits` in the given Namespace. This policy will target the production clusters (labeled as `environment: prod`) and the namespace `default`.
+
+The Policy will add default memory `requests` and `limits` to containers which do not provide resource configuration.
+
+~~~sh
+oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/policies/05_memory_limitrange.yaml
+~~~
+
+1. We are going to create a test deployment in the `managed-prod` cluster where the Policy was created
+
+    ~~~sh
+    cat <<EOF | oc --context managed-prod -n default create -f -
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: policy-test
+      name: policy-test
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: policy-test
+      strategy: {}
+      template:
+        metadata:
+          labels:
+            app: policy-test
+        spec:
+          containers:
+          - image: quay.io/mavazque/reversewords:latest
+            name: reversewords
+            resources: {}
+    EOF
+    ~~~
+2. We created the deployment without specifying any `resources` for the container, but the Policy forced the defaults
+
+    ~~~sh
+    oc --context managed-prod -n default get pods -l app=policy-test -o jsonpath='{.items[*].spec.containers[*].resources}'
+    ~~~
+
+    ~~~sh
+    map[limits:map[memory:512Mi] requests:map[memory:256Mi]]
+    ~~~
+
 ---
 
 **Back to [Introduction to Policies on ACM](./07_introduction_to_policies.md)** 
