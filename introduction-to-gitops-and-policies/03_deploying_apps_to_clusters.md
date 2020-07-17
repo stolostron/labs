@@ -114,7 +114,7 @@ Let's explore the status for our `PlacementRule` and `Subscription`:
     ~~~sh
     oc --context hub -n gitops-apps get placementrule development-clusters -o yaml
     ~~~
-    > As you can see in the `status` we are matching cluster named `spoke` which is our development cluster
+    > As you can see in the `status` we are matching cluster named `managed-cluster1-dev` which is our development cluster
     ~~~yaml
     apiVersion: apps.open-cluster-management.io/v1
     kind: PlacementRule
@@ -148,7 +148,7 @@ Let's explore the status for our `PlacementRule` and `Subscription`:
     ~~~sh
     oc --context hub -n gitops-apps get subscription reversewords-dev-app-subscription -o yaml
     ~~~
-    > As you can see in the `status` we are sending the application to the cluster named spoke and the subscription is propagated to the cluster already
+    > As you can see in the `status` we are sending the application to the cluster named managed-cluster1-dev and the subscription is propagated to the cluster already
     ~~~yaml
     apiVersion: apps.open-cluster-management.io/v1
     kind: Subscription
@@ -386,8 +386,7 @@ Reverse Words Release: Production release v0.0.2. App version: v0.0.2
 
 ---
 
-<!--**Continue to [Using TimeWindows](./03_using_timewindows.md)** -->
-**Continue to [Disaster Recovery](./05_disaster_recovery.md)**
+**Continue to [Using TimeWindows](./04_using_timewindows.md)**
 
 **Back to [Introduction to GitOps on ACM](./02_introduction_to_gitops.md)** 
 

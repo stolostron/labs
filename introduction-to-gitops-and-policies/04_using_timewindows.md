@@ -18,8 +18,8 @@ metadata:
   labels:
     app: reversewords-pro-app
   annotations:
-    apps.open-cluster-management.io/github-path: apps/reversewords/
-    apps.open-cluster-management.io/github-branch: prod
+    apps.open-cluster-management.io/git-path: apps/reversewords/
+    apps.open-cluster-management.io/git-branch: prod
 spec:
   channel: gitops-apps/acm-gitops-github
   placement:
@@ -68,7 +68,7 @@ Now we should have our application running on the production cluster:
 
 ~~~sh
 date
-oc --context spoke2 -n gitops-apps get pods,svc,route
+oc --context managed-prod -n gitops-apps get pods,svc,route
 ~~~
 
 ~~~sh
