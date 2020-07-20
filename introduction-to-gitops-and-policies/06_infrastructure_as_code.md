@@ -1,32 +1,37 @@
 # Configuring Infrastructure using Apps
 
-> **Current `Subscription Operator` version (as April 3rd 2020) doesn't support patching existing resources on the cluster, that means that the OAuth config won't be applied. This use-case is documented here for reference only.**
+So far, we have used GitOps patterns to deploy applications in our different clusters. Now we are going to explore how we can leverage GitOps patterns to configure
+our infrastructure.
 
----
+For this lab, we will be adding `HTpasswd` authentication to our `development` clusters. 
 
-As you know GitOps pattern can be used as well for configuring infrastructure related things, in this use case we're going to add a new authentication method to our clusters.
+We have generated a very secure password, `changeme`, and defined a user `admin` which will be able to login.
 
-We're adding `HTPasswd` authentication to our clusters, in order to do so we've generated a very secure password, `changeme`, and defined a user `admin` which will be able to login.
+Next, the `Policy` file defining the required `Secret` and `OAuth` configuration has been uploaded to Git (remember, don't upload plain secrets to Git!! Use SealedSecrets or Vault instead).
 
-We uploaded a `Secret` containing the user credentials to Git (please, don't try this at home, school or anywhere. Keep your plain secrets away from Git), as well as the `OAuth` config required
-for configuring this new authentication method.
+* [Dev Clusters HTPass Auth Policy](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/blob/infra/authentication/dev-clusters-htpass-auth-policy.yaml)
 
-* [Secret](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/blob/infra/authentication/htpass-credentials.yaml)
-* [OAuth Config](https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/blob/infra/authentication/htpasswd-oauth-config.yaml)
-
-We're going to add this authentication method to our `Development` clusters, there is one RFE opened to allow setting different `namespaces` for the objects created by `Subscription` rather than defaulting to
-the namespace where the subscription is created. Since the RFE is still not implemented, we are going to create ACM manifest in the `openshift-config` namespace. You can track the RFE status [here](https://github.com/open-cluster-management/backlog/issues/1295).
-
-1. Create the `PlacementRule` for matching the `development` clusters
+1. Create a new Namespace in the hub cluster for storing the Day 2 Operations policies for the infrastructure configuration
 
     ~~~sh
-    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/infra-gitops/00_placement_rule-dev.yaml
+    oc --context hub create namespace day2ops-policies
     ~~~
-2. Create the `Subscription` for deploying the OAuth config onto `development` clusters
+2. Load the subscription which will create the policies in the hub cluster
 
     ~~~sh
-    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/infra-gitops/01_subscription-oauth-htpasswd-config-dev.yaml
+    oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/infra-gitops/00_dev-clusters-htpass-auth-subscription.yaml
     ~~~
+3. Get the development cluster console URL
+
+    ~~~sh
+    oc --context managed-dev -n openshift-console get route console -o jsonpath='{.spec.host}'
+    ~~~
+4. Open the console URL in your browser and you will get a new option to authenticate using HTPass users
+
+    ![New HTPass Auth](assets/new_login.png)
+5. You can now login using user `admin` and password `changeme`
+
+    ![Admin User](assets/admin_user.png)
 
 ---
 
