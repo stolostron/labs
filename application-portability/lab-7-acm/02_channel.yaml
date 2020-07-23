@@ -1,0 +1,8 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: pacmanchannel
+  namespace: pacman
+spec:
+  pathname: 'https://github.com/open-cluster-management/labs.git'
+  type: GitHub

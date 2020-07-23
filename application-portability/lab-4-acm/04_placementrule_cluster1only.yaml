@@ -1,0 +1,11 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: httpd
+  name: cluster1only
+  namespace: simple-app
+spec:
+  clusterSelector:
+    matchLabels:
+      clusterid: cluster1

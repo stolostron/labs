@@ -1,0 +1,16 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: web-app-cluster2
+  namespace: web-app
+  labels:
+    deployment: hello
+  annotations:
+    apps.open-cluster-management.io/github-branch: master
+    apps.open-cluster-management.io/github-path: application-portability/lab-5-assets/overlays/cluster2
+spec:
+  channel:  web-app/web-app-channel
+  placement: 
+    placementRef: 
+      kind: PlacementRule
+      name: cluster2

@@ -1,0 +1,10 @@
+commonLabels:
+  org: RHTE
+commonAnnotations:
+  note: Hello, I am cluster3!
+bases:
+- ../../base
+patchesStrategicMerge:
+- configmap.yaml
+- deployment.yaml
+- route.yaml

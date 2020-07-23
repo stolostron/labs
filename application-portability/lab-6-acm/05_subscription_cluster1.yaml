@@ -1,0 +1,16 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: mongo-cluster1                           
+  namespace: mongo
+  labels:
+    name: mongo
+  annotations:
+    apps.open-cluster-management.io/github-branch: master
+    apps.open-cluster-management.io/github-path: application-portability/lab-6-assets/overlays/cluster1
+spec:
+  channel:  mongo/mongochannel
+  placement: 
+    placementRef: 
+      kind: PlacementRule
+      name: cluster1

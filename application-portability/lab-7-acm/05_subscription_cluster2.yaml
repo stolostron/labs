@@ -1,0 +1,16 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: pacman-cluster2                           
+  namespace: pacman
+  labels:
+    name: pacman
+  annotations:
+    apps.open-cluster-management.io/github-branch: master
+    apps.open-cluster-management.io/github-path: application-portability/lab-7-assets/overlays/cluster2
+spec:
+  channel:  pacman/pacmanchannel
+  placement: 
+    placementRef: 
+      kind: PlacementRule
+      name: pacmancluster2
