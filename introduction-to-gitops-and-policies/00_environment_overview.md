@@ -12,16 +12,16 @@ You can follow the official docs in order to deploy OpenShift as well as ACM, th
 
 **OpenShift Clusters**
 
-* 1 x HUB Cluster Running OCP 4.4.11
+* 1 x HUB Cluster Running OCP 4.5.4
   * ACM Version Used: 2.0.0
-* 1 x Managed Cluster Running OCP 4.4.11
+* 1 x Managed Cluster Running OCP 4.5.4
   * Cluster Name: managed-cluster1-dev
   * Cluster Labels: 
     * cloud: AWS
     * environment: **dev**
     * Additional labels
       * region: EU
-* 1 x Managed Cluster Running OCP 4.4.11
+* 1 x Managed Cluster Running OCP 4.5.4
   * Cluster Name: managed-cluster2-prod
   * Cluster Labels:
     * cloud: AWS
