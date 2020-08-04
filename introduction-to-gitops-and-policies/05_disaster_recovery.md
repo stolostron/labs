@@ -13,7 +13,18 @@ since we defined `clusterReplicas: 1` within the `PlacementRule`.
     ~~~sh
     oc --context hub delete -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/08_subscription-timewindow.yaml
     ~~~
-2. Label the clusters
+2. List available clusters
+
+    ~~~sh
+    oc --context hub get managedcluster
+    ~~~
+
+    ~~~sh
+    NAME                    HUB ACCEPTED   MANAGED CLUSTER URLS   JOINED   AVAILABLE   AGE
+    managed-cluster1-dev    true                                  True     True        1h6m
+    managed-cluster2-prod   true                                  True     True        1h8m
+    ~~~
+3. Label the clusters
 
     > ![TIP](assets/tip-icon.png) **NOTE:** We are using the command line, but labeling can be done using the ACM WebUI as well
     ~~~sh
@@ -22,12 +33,12 @@ since we defined `clusterReplicas: 1` within the `PlacementRule`.
     # Patch production cluster
     oc --context hub patch managedcluster managed-cluster2-prod -p '{"metadata":{"labels":{"finance":"dev"}}}' --type=merge
     ~~~
-3. Create the new `PlacementRule`
+4. Create the new `PlacementRule`
 
     ~~~sh
     oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/09_placement_rule-finance.yaml
     ~~~
-4. Before creating the `Subscription` let's check which cluster is matching the `PlacementRule` we just created
+5. Before creating the `Subscription` let's check which cluster is matching the `PlacementRule` we just created
 
     ~~~sh
     oc --context hub -n gitops-apps get placementrule finance-dev-clusters -o jsonpath='{.status.decisions[]}'
@@ -37,13 +48,13 @@ since we defined `clusterReplicas: 1` within the `PlacementRule`.
     map[clusterName:managed-cluster1-dev clusterNamespace:managed-cluster1-dev]
     ~~~
     > ![WARNING](assets/warning-icon.png) **NOTE:** The application will be deployed to `managed-cluster1-dev` cluster only based on the output above
-5. Create the `Subscription`
+6. Create the `Subscription`
 
     ~~~sh
     oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/10_subscription-finance.yaml
     ~~~
 
-Now we should have our application running on the `managed-cluster1-dev` cluster and not in `managed-cluster2-prod` cluster:
+Based on the `PlacementRule` decission, the application should be running on the `managed-cluster1-dev` cluster and not in `managed-cluster2-prod` cluster:
 
 > ![TIP](assets/tip-icon.png) **NOTE:** We're using `oc` tool in order to verify the app deployment. Feel free to review the application on the ACM Console as well.
 

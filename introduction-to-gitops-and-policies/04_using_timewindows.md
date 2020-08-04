@@ -62,6 +62,12 @@ Back to the example:
     oc --context hub create -f https://github.com/RHsyseng/acm-app-lifecycle-policies-lab/raw/master/acm-manifests/reversewords-kustomize/08_subscription-timewindow.yaml
     ~~~
 
+3. As mentioned before, edit the subscription so the TimeWindow matches your current schedule if needed.
+
+    ~~~sh
+    oc --context hub -n gitops-apps edit subscriptions.apps.open-cluster-management.io reversewords-prod-app-subscription
+    ~~~
+
 Now we should have our application running on the production cluster:
 
 > ![TIP](assets/tip-icon.png) **NOTE:** We're using `oc` tool in order to verify the app deployment. Feel free to review the application on the ACM Console as well.
