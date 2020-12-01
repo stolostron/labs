@@ -1,10 +1,5 @@
 # **Time Windows**
 
-
-# **This chapter has been disabled. It will be re-enabled in the future.**
-
-----
-
 When deploying to some environments, like `production` you might want to decide when those deployments should or should not occur, in order to configure that we're going to use `Time Windows` within our `Subscriptions`.
 
 For this example, we're reutilizing the `Production` subscription, let's try to keep it RealWorld™.
